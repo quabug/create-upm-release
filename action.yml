@@ -15,7 +15,7 @@ inputs:
     required: false
   upm_tag_prefix:
     description: 'Tag prefix of verional tag'
-    required: false
+    required: true
     default: ''
   upm_package_path:
     description: 'Path of unity package which should contain a package.json file.'
