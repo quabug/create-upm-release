@@ -15,7 +15,7 @@ async function run() {
     const { version } = JSON.stringify(packageJson);
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
-    const tagPrefix = core.getInput('tag_prefix', { required: true });
+    const tagPrefix = core.getInput('upm_tag_prefix', { required: true });
 
     // This removes the 'refs/tags' portion of the string, i.e. from 'refs/tags/v1.10.15' to 'v1.10.15'
     const tag = `${tagPrefix}${version}`;
