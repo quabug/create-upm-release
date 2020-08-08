@@ -17,6 +17,10 @@ inputs:
     description: 'Tag prefix of verional tag'
     required: false
     default: ''
+  upm_package_path:
+    description: 'Path of unity package which should contain a package.json file.'
+    required: true
+    default: ''
 outputs:
   id:
     description: 'The ID of the created Release'
