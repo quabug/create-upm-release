@@ -48,7 +48,6 @@ async function run() {
         target_commitish: commitish
       });
     } finally {
-      console.log(release);
       // Get the ID, html_url, and upload URL for the created Release from the response
       const {
         data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl }
