@@ -8796,7 +8796,7 @@ async function run() {
     const packageJson = JSON.stringify(packageFile);
     console.log(packageJson);
     console.log(JSON.parse(packageJson));
-    const { version } = JSON.parse(packageJson);
+    const version = JSON.parse(packageJson).version;
     console.log(version);
     if (version === undefined || version === null) {
       core.setFailed('invalid package version');
