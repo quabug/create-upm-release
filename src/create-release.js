@@ -12,10 +12,9 @@ async function run() {
 
     const packagePath = core.getInput('upm_package_path', { required: true });
     const packageFile = fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' });
-    const packageJson = JSON.stringify(packageFile);
+    const packageJson = JSON.parse(packageFile);
     console.log(packageJson);
-    console.log(JSON.parse(packageJson));
-    const version = JSON.parse(packageJson).version;
+    const version = packageJson;
     console.log(version);
     if (version === undefined || version === null) {
       core.setFailed('invalid package version');
