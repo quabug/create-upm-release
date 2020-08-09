@@ -8792,8 +8792,12 @@ async function run() {
     const { owner, repo } = context.repo;
 
     const packagePath = core.getInput('upm_package_path', { required: true });
-    const packageJson = fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' });
-    const { version } = JSON.parse(JSON.stringify(packageJson));
+    const packageFile = fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' });
+    const packageJson = JSON.stringify(packageFile);
+    console.log(packageJson);
+    console.log(JSON.parse(packageJson));
+    const { version } = JSON.parse(packageJson);
+    console.log(version);
     if (version === undefined || version === null) {
       core.setFailed('invalid package version');
     }
