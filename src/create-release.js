@@ -11,11 +11,11 @@ async function run() {
     const { owner, repo } = context.repo;
 
     const packagePath = core.getInput('upm_package_path', { required: true });
-    core.info(`package path = ${packagePath}`);
+    console.log(`package path = ${packagePath}`);
     const packageJson = JSON.stringify(fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' }));
-    core.info(`package json = ${packageJson}`);
+    console.log(`package json = ${packageJson}`);
     const { version } = packageJson;
-    core.info(`package version = ${version}`);
+    console.log(`package version = ${version}`);
     if (version === undefined || version === null) {
       core.setFailed('invalid package version');
     }
