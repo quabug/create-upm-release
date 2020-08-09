@@ -13,9 +13,7 @@ async function run() {
     const packagePath = core.getInput('upm_package_path', { required: true });
     const packageFile = fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' });
     const packageJson = JSON.parse(packageFile);
-    console.log(packageJson);
-    const version = packageJson;
-    console.log(version);
+    const { version } = packageJson;
     if (version === undefined || version === null) {
       core.setFailed('invalid package version');
     }
@@ -50,6 +48,7 @@ async function run() {
         target_commitish: commitish
       });
     } finally {
+      console.log(release);
       // Get the ID, html_url, and upload URL for the created Release from the response
       const {
         data: { id: releaseId, html_url: htmlUrl, upload_url: uploadUrl }
