@@ -1,7 +1,7 @@
 {
-  "name": "create-release",
+  "name": "create-upm-release",
   "version": "1.0.0",
-  "description": "Create a release",
+  "description": "Create a release of upm",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint \"src/**.js\" \"tests/**.js\" --fix",
@@ -17,7 +17,7 @@
     "actions",
     "node"
   ],
-  "author": "GitHub",
+  "author": "quabug",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^1.0.0",
