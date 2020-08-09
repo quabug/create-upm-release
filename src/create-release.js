@@ -11,8 +11,14 @@ async function run() {
     const { owner, repo } = context.repo;
 
     const packagePath = core.getInput('upm_package_path', { required: true });
-    const packageJson = fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' });
-    const { version } = JSON.stringify(packageJson);
+    core.info(`package path = ${packagePath}`);
+    const packageJson = JSON.stringify(fs.readFileSync(`${packagePath}/package.json`, { encoding: 'utf8' }));
+    core.info(`package json = ${packageJson}`);
+    const { version } = packageJson;
+    core.info(`package version = ${version}`);
+    if (version === undefined || version === null) {
+      core.setFailed('invalid package version');
+    }
 
     // Get the inputs from the workflow file: https://github.com/actions/toolkit/tree/master/packages/core#inputsoutputs
     const tagPrefix = core.getInput('upm_tag_prefix', { required: true });
