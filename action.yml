@@ -1,4 +1,4 @@
-name: 'Create a Release'
+name: 'Create a Release of Unity Package'
 description: 'Create a release for a tag in your repository'
 author: 'GitHub'
 inputs:
