@@ -1,7 +1,7 @@
 {
   "name": "create-upm-release",
-  "version": "1.0.0",
-  "description": "Create a release of upm",
+  "version": "1.0.1",
+  "description": "Create a release of unity package",
   "main": "dist/index.js",
   "scripts": {
     "lint": "eslint \"src/**.js\" \"tests/**.js\" --fix",
