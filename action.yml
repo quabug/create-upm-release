@@ -40,16 +40,26 @@ runs:
       uses: mikefarah/yq@master
       with:
         cmd: yq eval '.version' ${{ inputs.upm_package_path }}/package.json
+    - name: Get Tag
+      id: get-tag
+      run: echo "::set-output name=result::${{ inputs.upm_tag_prefix }}${{ steps.fetch-version.outputs.result }}"
+      shell: bash
+    - name: Check Release Existence
+      id: has-release
+      run: echo "::set-output name=result::`gh release view ${{ steps.get-tag.outputs.result }} 1> /dev/null 2> /dev/null && echo true || echo false`"
+      shell: bash
     - name: Create UnityPackage
-      if: ${{ inputs.create_unitypackage == 'true' }}
+      if: ${{ inputs.create_unitypackage == 'true' && steps.has-release.outputs.result == 'false' }}
       uses: quabug/unity-pack@v1
       with:
         package-dir: ${{ inputs.upm_package_path }}
-    - run: |
+    - name: Create Release
+      if: ${{ steps.has-release.outputs.result == 'false' }}
+      run: |
         export draft_option=`[ ${{ inputs.draft }} = 'true' ] && echo '-b'`
         export prerelease_option=`[ ${{ inputs.prerelease }} = 'true' ] && echo '-p'`
-        export tag=${{ inputs.upm_tag_prefix }}${{ steps.fetch-version.outputs.result }}
-        export unitypackage=`[ ${{ inputs.create_unitypackage }} = 'true' ] && ${{ inputs.unitypackage_name }}${tag//\//\-}.unitypackage`
+        export tag=${{ steps.get-tag.outputs.result }}
+        export unitypackage=`[ ${{ inputs.create_unitypackage }} = 'true' ] && echo ${{ inputs.unitypackage_name }}-${tag//\//\-}.unitypackage`
         mv output.unitypackage $unitypackage 2> /dev/null
         export release_url=`gh create release $tag -t $tag -n "" --target ${{ inputs.target }} $draft_option $prerelase_option $unitypackage`
         echo "::set-output name=release_url::$(echo $release_url)"
