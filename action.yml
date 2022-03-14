@@ -61,7 +61,7 @@ runs:
         export tag=${{ steps.get-tag.outputs.result }}
         export unitypackage=`[ ${{ inputs.create_unitypackage }} = 'true' ] && echo ${{ inputs.unitypackage_name }}-${tag//\//\-}.unitypackage`
         mv output.unitypackage $unitypackage 2> /dev/null
-        export release_url=`gh create release $tag -t $tag -n "" --target ${{ inputs.target }} $draft_option $prerelase_option $unitypackage`
+        export release_url=`gh release create $tag -t $tag -n "" --target ${{ inputs.target }} $draft_option $prerelase_option $unitypackage`
         echo "::set-output name=release_url::$(echo $release_url)"
       shell: bash
 branding:
