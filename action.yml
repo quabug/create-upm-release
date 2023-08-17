@@ -37,7 +37,7 @@ runs:
   steps:
     - name: Get Tag
       id: get-tag
-      run: echo "result=${{ inputs.upm_tag_prefix }}`yq eval '.version' ${{ inputs.upm_package_path }}/package.json`" >> $GITHUB_OUTPUT
+      run: echo "result=${{ inputs.upm_tag_prefix }}`jq -r '.version' ${{ inputs.upm_package_path }}/package.json`" >> $GITHUB_OUTPUT
       shell: bash
     - name: Check Release Existence
       id: has-release
