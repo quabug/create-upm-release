@@ -35,18 +35,13 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Fetch Package Version
-      id: fetch-version
-      uses: mikefarah/yq@master
-      with:
-        cmd: yq eval '.version' ${{ inputs.upm_package_path }}/package.json
     - name: Get Tag
       id: get-tag
-      run: echo "::set-output name=result::${{ inputs.upm_tag_prefix }}${{ steps.fetch-version.outputs.result }}"
+      run: echo "result=${{ inputs.upm_tag_prefix }}`jq -r '.version' ${{ inputs.upm_package_path }}/package.json`" >> $GITHUB_OUTPUT
       shell: bash
     - name: Check Release Existence
       id: has-release
-      run: echo "::set-output name=result::`gh release view ${{ steps.get-tag.outputs.result }} 1> /dev/null 2> /dev/null && echo true || echo false`"
+      run: echo "result=`gh release view ${{ steps.get-tag.outputs.result }} 1> /dev/null 2> /dev/null && echo true || echo false`" >> $GITHUB_OUTPUT
       shell: bash
     - name: Create UnityPackage
       if: ${{ inputs.create_unitypackage == 'true' && steps.has-release.outputs.result == 'false' }}
@@ -62,7 +57,7 @@ runs:
         export unitypackage=`[ ${{ inputs.create_unitypackage }} = 'true' ] && echo ${{ inputs.unitypackage_name }}-${tag//\//\-}.unitypackage`
         mv output.unitypackage $unitypackage 2> /dev/null
         export release_url=`gh release create $tag -t $tag -n "" --target ${{ inputs.target }} $draft_option $prerelase_option $unitypackage`
-        echo "::set-output name=release_url::$(echo $release_url)"
+        echo "release_url=$(echo $release_url)" >> $GITHUB_OUTPUT
       shell: bash
 branding:
   icon: 'tag'
