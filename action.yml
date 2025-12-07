@@ -45,7 +45,7 @@ runs:
       shell: bash
     - name: Create UnityPackage
       if: ${{ inputs.create_unitypackage == 'true' && steps.has-release.outputs.result == 'false' }}
-      uses: quabug/unity-pack@v1
+      uses: quabug/unity-pack@v2
       with:
         package-dir: ${{ inputs.upm_package_path }}
     - name: Create Release
